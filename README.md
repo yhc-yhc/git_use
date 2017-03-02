@@ -10,10 +10,13 @@
 
 	git remote -v 
 查看远程仓库地址
+
 	git remote add origin {url}  
 设置git远程仓库地址
+
 	git push -u origin master 
 首次把本地仓库同步到远程master
+
 	git remote set-url origin {url} 
 修改远程仓库地址
 
@@ -25,7 +28,10 @@
 
 	git push origin develop:master -f 
 把本志的develop分支强制推送到远程master
+
 	git push origin master -f 
 强制推送到远程master分支
+
 	git checkout master && git reset --hard develop 
 切换本地分支到master, 并且把master分支内容重置为develop分支内容
+
