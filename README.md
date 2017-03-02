@@ -19,4 +19,5 @@ git submodule add {url} {dirname} 把另一个git仓库作为子模块加到当�
 git checkout -b {branchname} 新建并切换到 分支 branchname
 
 git push origin develop:master -f 把本志的develop分支强制推送到远程master
+git push origin master -f 强制推送到远程master分支
 git checkout master && git reset --hard develop 切换本地分支到master, 并且把master分支内容重置为develop分支内容
