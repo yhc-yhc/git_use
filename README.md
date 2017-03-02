@@ -1,5 +1,5 @@
 
-#1 commonly used git command
+# commonly used git command
 	git connfig --global user.name '{name}'
 	git config --global user.email '{email}'
 	ssh-keygen -t rsa -C '{email}'
