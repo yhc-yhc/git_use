@@ -38,6 +38,6 @@
 	git submodule update --init --recursive
 初始化git子模块项目
 
-	git rm {dirname} 
+	git rm {dirname}  && rm .gitmodules
 删除git子模块
 
