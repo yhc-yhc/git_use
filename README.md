@@ -20,9 +20,6 @@
 	git remote set-url origin {url} 
 修改远程仓库地址
 
-	git submodule add {url} {dirname} 
-把另一个git仓库作为子模块加到当前项目的 dirname目录 
-
 	git checkout -b {branchname} 
 新建并切换到 分支 branchname
 
@@ -34,4 +31,13 @@
 
 	git checkout master && git reset --hard develop 
 切换本地分支到master, 并且把master分支内容重置为develop分支内容
+
+	git submodule add [--force] {url} {dirname} 
+把另一个git仓库作为子模块加到当前项目的 dirname目录 
+
+	git submodule update --init --recursive
+初始化git子模块项目
+
+	git rm {dirname} 
+删除git子模块
 
