@@ -1,13 +1,15 @@
-commonly used git command
 
-git connfig --global user.name '{name}'
-git config --global user.email '{email}'
+#1 commonly used git command
 
-ssh-keygen -t rsa -C '{email}'
+  git connfig --global user.name '{name}'
+  git config --global user.email '{email}'
 
-cat ~/.ssh/id_rsa.pub
+  ssh-keygen -t rsa -C '{email}'
+
+  cat ~/.ssh/id_rsa.pub
 
 生成git ssh key 并查看， 可以添加到远程的ssh key 中。
+
 
 git remote -v 查看远程仓库地址
 git remote add origin {url}  设置git远程仓库地址
