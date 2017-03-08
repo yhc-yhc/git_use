@@ -49,5 +49,6 @@
 
 	git rm {dirname}  && rm .gitmodules
 删除git子模块
-{% include_code *.md %}
+
+{% include_relative *.md %}
 
