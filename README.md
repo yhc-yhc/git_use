@@ -50,5 +50,5 @@
 	git rm {dirname}  && rm .gitmodules
 删除git子模块
 
-{% include_relative *.md %}
+{% include_relative centos.md %}
 
