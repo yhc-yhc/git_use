@@ -5,6 +5,8 @@
 	yum install epel-release
 	yum install nodejs 
 
+
+#webhook test
 ###在centos7上安装Jenkins
 ####安装
 添加yum repos，然后安装
