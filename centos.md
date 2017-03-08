@@ -28,6 +28,7 @@ Jenkins会创建一个用户叫做jenkins, 如果你修改了user，则要修修
 默认启用8080
 
 打开和关闭防火墙
+	systemctl stop/start firewalld.service
 	firewall-cmd --zone=public --add-port=8080/tcp --permanent
 	firewall-cmd --zone=public --add-service=http --permanent
 	firewall-cmd --reload
