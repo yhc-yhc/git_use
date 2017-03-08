@@ -38,7 +38,6 @@
 	git checkout master && git reset --hard develop 
 切换本地分支到master, 并且把master分支内容重置为develop分支内容
  
-	git branch -r -d origin/branch-name  
 	git push origin :branch-name 
 删除远程分支 
 
