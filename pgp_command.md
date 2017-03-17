@@ -4,7 +4,7 @@
 列出密钥
 
 	gpg --import [密钥文件]
-输入密钥
+导入密钥文件到系统
 
 	gpg --fingerprint [用户ID]
 生成公钥指纹
