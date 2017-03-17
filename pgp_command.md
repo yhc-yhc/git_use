@@ -7,6 +7,7 @@
 导入密钥文件到系统
 
 	gpg --delete-key [用户ID]
+	gpg --delete-key --always-trust --batch --yes [uid]
 从密钥列表中删除某个密钥
 
 	gpg --fingerprint [用户ID]
