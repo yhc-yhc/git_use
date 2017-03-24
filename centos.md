@@ -2,8 +2,17 @@
 
 ###centos7 install nodejs
 
-	yum install epel-release
-	yum install nodejs 
+	yum install epel-release 设置安装源
+	yum install nodejs
+
+centos install zsh & oh-my-zsh
+	yum install zsh
+	curl方式
+		curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+		
+	wget方式
+		wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
+
 
 ### vim command
 	
