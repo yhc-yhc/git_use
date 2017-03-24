@@ -24,7 +24,14 @@ fi
 gpg --import ./keys/PICWORKS-HKDL-2017.asc
 gpg --import ./keys/PICWORKS-HKDL-Test-2017.asc
 gpg --import ./keys/HKDL-PicWorks-TEST.asc
-echo_success 'success import gpg keys'
+
+if [ $? -eq 0 ]
+then
+	echo_success 'success import gpg keys'
+else
+	echo_error 'gpg keys not correctly import to os, please check, the project can not encryt files'
+fi
+
 npm install
 
 echo_time `date`
