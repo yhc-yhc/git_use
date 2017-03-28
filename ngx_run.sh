@@ -1,5 +1,13 @@
 
-cd ~/work
+cd ~
+if [ -d work ]
+then
+	echo 'work dir exists'
+else
+	mkdir work
+fi
+
+cd work
 echo `pwd`
 
 if [ -d git_use ] 
@@ -13,11 +21,17 @@ else
 	git clone https://github.com/yhc-yhc/git_use.git;
 fi
 
-rm -rf ~/conf
-cd ~
-mkdir conf
-cd -
+
+if [ -d ~/conf ]
+then
+	echo 'conf dir exists'
+else
+	cd ~
+	mkdir conf
+	cd -
+fi
+
 cp -r git_use/ngx_conf ~/conf/
 mv ~/conf/ngx_conf/ngx_start.sh ./
-echo `ls ~/conf/ngx_conf`
+echo nginx config file: `ls ~/conf/ngx_conf`
 ./ngx_start.sh
