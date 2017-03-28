@@ -7,9 +7,10 @@
 	cd config
 	md config_ngx
 	cd config_ngx
-	touch server
+	touch 80.conf
 
-	vi server
+	vi 80.conf
+#### nginx 配置中的 127.0.0.1 最好都改成 localhost, localhost不经过网卡，而且当本机地址受限时配置成 127.0.0.1 会访问不到
 
 ### express project
 
