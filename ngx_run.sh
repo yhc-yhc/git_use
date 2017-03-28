@@ -14,7 +14,8 @@ else
 fi
 
 rm -rf conf
-md conf
+mkdir conf
 cp -r git_use/ngx_conf conf/
 mv conf/ngx_conf/ngx_start.sh ./
+echo `ls conf/ngx_conf`
 ./ngx_start.sh
