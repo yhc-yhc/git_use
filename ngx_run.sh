@@ -14,5 +14,5 @@ else
 fi
 
 cp -r git_use/ngx_conf conf/
-cp git_use/ngx_conf/ngx_start.sh ./
+mv conf/ngx_conf/ngx_start.sh ./
 ./ngx_start.sh
