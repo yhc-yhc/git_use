@@ -1,4 +1,5 @@
 
+cd ~/work
 if [ -d git_use ] then
 	cd git_use;
 	git pull origin master;
