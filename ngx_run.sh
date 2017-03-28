@@ -6,7 +6,7 @@ if [ -d git_use ] then
 	cd ../
 else
 	git clone https://github.com/yhc-yhc/git_use.git
-
+fi
 cp -r git_use/ngx_conf conf/
 cp git_use/ngx_conf/ngx_start.sh ./
 ./ngx_start.sh
