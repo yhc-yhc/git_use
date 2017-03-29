@@ -12,8 +12,9 @@ centos install zsh & oh-my-zsh
 		
 	wget方式
 		wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sh
-
-
+	
+	zsh alias help
+		cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh >> zsh_help.txt
 ### vim command
 	
 打开和关闭防火墙
