@@ -83,7 +83,7 @@ runcontainer(){
 	if [ $# = 0 ]
 	then
 		echo no params , confirm?
-		# confirm
+		confirm
 	else
 		echo fomat_params
 		fomat_params $@
