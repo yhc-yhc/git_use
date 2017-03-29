@@ -37,5 +37,5 @@ demo: ngx_conf/ngx_start.sh
 
 ### use jenkins 
 	docker run --name jenkins -d -p 8080:8080 -v /var/jenkins_home jenkins
-	./run_box.sh image=jenkins p=8080 v=~/jenkins_home:/var/jenkins_home
+	./run_box.sh image=jenkins p=8080 v=/var/jenkins_home
 	
