@@ -32,7 +32,6 @@ else
 fi
 
 cp -r git_use/ngx_conf ~/conf/
-mv ~/conf/ngx_conf/ngx_start.sh ./
 mv ~/conf/ngx_conf/run_box.sh ./
 echo nginx config file: `ls ~/conf/ngx_conf`
-./ngx_start.sh
+./run_box.sh image=nginx p=80 l=localhost:demo v=~/logs/nginx:/var/log/nginx v=`pwd`/local:/www v=~/conf/ngx_conf:/etc/nginx/conf.d
