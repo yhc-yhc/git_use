@@ -83,10 +83,8 @@ for cl in ${l[@]}
 do
 	link_str="${link_str}--link ${cl} "
 done
-command="${command}${v_str}${link_str}${port_str}--name $name ${image}"
-
+command="${command}${v_str}${link_str}${port_str}--name ${name} ${image}"
 echo "${command}"
-
 docker stop ${name}
 docker rm ${name}
-eval $command
+eval "$command"
