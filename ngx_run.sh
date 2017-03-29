@@ -33,5 +33,6 @@ fi
 
 cp -r git_use/ngx_conf ~/conf/
 mv ~/conf/ngx_conf/ngx_start.sh ./
+mv ~/conf/ngx_conf/runbox.sh ./
 echo nginx config file: `ls ~/conf/ngx_conf`
 ./ngx_start.sh
