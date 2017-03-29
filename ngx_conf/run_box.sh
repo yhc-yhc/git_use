@@ -2,15 +2,17 @@ image='';
 name='';
 p=();
 v=();
-l=()
+l=();
+link_str="";
+v_str="";
+port_str="";
 command="docker run -d --restart=always --privileged=true"
-command="${command} -v /etc/localtime:/etc/localtime"
+command="${command} -v /etc/localtime:/etc/localtime "
 
 confirm(){
 	echo 'confirm'
 	read -p 'plase write the image name you want to run:' image
 	name=$image
-	command="${command} ${v_str} ${link_str} ${port_str} --name $name ${image}"
 }
 
 fomat_params(){
@@ -65,25 +67,23 @@ echo port: ${p[@]};
 echo v: ${v[@]};
 echo link: ${l[@]};
 
-
-port_str=""
 for port in ${p[@]}
 do
-	port_str="${port_str} -p ${port}:${port}"
+	port_str="${port_str}-p ${port}:${port} "
 done
 
-v_str=""
+
 for vl in ${v[@]}
 do
-	v_str="${v_str} -v ${vl}"
+	v_str="${v_str}-v ${vl} "
 done
 
-link_str=""
+
 for cl in ${l[@]}
 do
-	link_str="${link_str} --link ${cl}"
+	link_str="${link_str}--link ${cl} "
 done
-command="${command} ${v_str} ${link_str} ${port_str} --name $name ${image}"
+command="${command}${v_str}${link_str}${port_str}--name $name ${image}"
 
 echo "${command}"
 
