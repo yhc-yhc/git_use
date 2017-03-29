@@ -50,12 +50,12 @@ else
 	fomat_params $@
 fi
 
-if [ -z image ]
+if [ -z $image ]
 then
 	read -p 'plase write the image name you want to run:' image
 fi
 
-if [ -z name ]
+if [ -z $name ]
 then
 	name=$image
 fi
