@@ -89,4 +89,4 @@ echo "${command}"
 
 docker stop ${name}
 docker rm ${name}
-$command
+eval $command
