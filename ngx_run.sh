@@ -34,4 +34,4 @@ fi
 cp -r git_use/ngx_conf ~/conf/
 mv ~/conf/ngx_conf/run_box.sh ./
 echo nginx config file: `ls ~/conf/ngx_conf`
-./run_box.sh image=nginx p=80 l=demo:localhost v=~/logs/nginx:/var/log/nginx v=`pwd`/local:/www v=~/conf/ngx_conf:/etc/nginx/conf.d
+./run_box.sh image=docker.io/nginx p=80 l=demo:localhost v=~/logs/nginx:/var/log/nginx v=`pwd`/local:/www v=~/conf/ngx_conf:/etc/nginx/conf.d
