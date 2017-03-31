@@ -15,7 +15,9 @@ centos install zsh & oh-my-zsh
 	
 	zsh alias help
 		cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh >> zsh_help.txt
-### vim command
+### centos7 install  bzip2
+
+	yum install bzip2 # tar 使用压缩支持 .tar.bz2
 	
 打开和关闭防火墙
 	systemctl stop/start firewalld.service
