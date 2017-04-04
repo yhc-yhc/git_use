@@ -50,5 +50,14 @@
 	git rm {dirname}  && rm .gitmodules
 删除git子模块
 
+	git log --pretty=format:"%h" -n 1
+提取最后n次提交的短commitId
+
+	git rev-parse --short HEAD
+提取最后一次提交的短commitId
+
+	git rev-parse HEAD
+提取最后一次提交的长commitId
+
 {% include_relative centos.md %}
 
