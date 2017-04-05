@@ -37,6 +37,14 @@ centos install zsh & oh-my-zsh
 	-P ：可以使用绝对路径来压缩！
 	-N ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的文件中！
 	--exclude FILE：在压缩的过程中，不要将 FILE 打包！
+
+
+### 免 sudo 使用 docker
+
+	sudo groupadd docker 如果还没有 docker group 就添加一个：
+	sudo gpasswd -a ${USER} docker  将用户加入该 group 内。然后退出并重新登录就生效啦。
+	sudo service docker restart   重启 docker 服务
+	newgrp - docker || pkill X  切换当前会话到新 group 或者重启 X 会话
 	
 打开和关闭防火墙
 	systemctl stop/start firewalld.service
