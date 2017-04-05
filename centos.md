@@ -5,7 +5,7 @@
 	yum install epel-release 设置安装源
 	yum install nodejs
 
-centos install zsh & oh-my-zsh
+### centos install zsh & oh-my-zsh
 	yum install zsh
 	curl方式
 		curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
@@ -17,7 +17,7 @@ centos install zsh & oh-my-zsh
 		cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh >> zsh_help.txt
 ### centos7 install  bzip2
 
-	yum install bzip2 # tar 使用压缩支持 .tar.bz2
+	yum install bzip2    # tar 使用压缩支持 .tar.bz2
 
 	tar命令
 	tar [-cxtzjvfpPN] 文件与目录 ....
@@ -45,6 +45,29 @@ centos install zsh & oh-my-zsh
 	sudo gpasswd -a ${USER} docker  将用户加入该 group 内。然后退出并重新登录就生效啦。
 	sudo service docker restart   重启 docker 服务
 	newgrp - docker || pkill X  切换当前会话到新 group 或者重启 X 会话
+
+### 升级 docker 
+	docker -v   # if the version lt 1.8, cannot use daocloud
+	sudo service stop docker
+	sudo wget https://get.docker.com/builds/Linux/x86_64/docker-1.9.1
+	mv /usr/bin/docker /usr/bin/docker_bak
+	mv docker-1.9.1 /usr/bin/docker
+	chmod +x /usr/bin/docker
+	/etc/init.d/docker start
+	service docker start
+	docker -v
+
+### docker 加速器
+	curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://0c19a7ee.m.daocloud.io
+
+
+### docker 维护
+	docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker stop
+	docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker rm
+	docker images -a | grep none | awk '{print $3 }'|xargs docker rmi
+
+	#stop all container
+	docker ps | grep "Up" | awk '{print $1 }' | xargs docker stop | xargs docker rm
 	
 打开和关闭防火墙
 	systemctl stop/start firewalld.service
