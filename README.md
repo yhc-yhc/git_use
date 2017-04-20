@@ -22,6 +22,15 @@
 	git branch -r
 查看远程分支
 
+	git branch
+查看本地分支
+
+	git push origin :{branch-name}
+删除远程分支
+
+	git branch -D {branchname}
+删除本地分支
+
 	git checkout -b {branchname} 
 新建并切换到 分支 branchname
 
@@ -36,10 +45,7 @@
 强制推送到远程master分支
 
 	git checkout master && git reset --hard develop 
-切换本地分支到master, 并且把master分支内容重置为develop分支内容
- 
-	git push origin :branch-name 
-删除远程分支 
+切换本地分支到master, 并且把master分支内容重置为develop分支内容 
 
 	git submodule add [--force] {url} {dirname} 
 把另一个git仓库作为子模块加到当前项目的 dirname目录 
@@ -50,7 +56,7 @@
 	git rm {dirname}  && rm .gitmodules
 删除git子模块
 
-	git log --pretty=format:"%h" -n 1
+	git log --pretty=format:"%h" -n {n}
 提取最后n次提交的短commitId
 
 	git rev-parse --short HEAD

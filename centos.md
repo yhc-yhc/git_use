@@ -1,5 +1,42 @@
 #centos7 use
 
+	修改 root用户密码
+	1,开机按 e
+	2,修改 linux16行的 ro 为 rw init=sysroot/bin/sh
+	3,contrl + x  ; 以单用户模式登录
+	4,chroot /sysroot
+	5,passwd root
+	6,touch /.autorelabel
+	7,exit
+	8,init 6
+
+###user manage
+	1, useradd username    添加用户
+	2, passwd username		设置用户密码
+	3, userdel -rf username  	删除用户
+	4 ls -l /home	查看用户
+	sudoers
+	whereis sudoers
+	ls -l /etc/sudoers
+	chmod -v u+w /etc/sudoers
+	vi /etc/sudoers
+	chmod -v u-w /etc/sudoers
+
+
+	sudo  passwd -d username
+	sudo -u username passwd
+
+### install pg
+	yum install postgresql-server
+	initdb ~/pgsql -E utf8
+	sudo service postgresql start
+
+### centos7 install Xwindows
+	yum update
+	yum groupinstall "X Window System"
+	yum install gnome-classic-session gnome-terminal nautilus-open-terminal control-center liberation-mono-fonts
+	
+
 ###centos7 install nodejs
 
 	yum install epel-release 设置安装源
@@ -15,6 +52,7 @@
 	
 	zsh alias help
 		cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh >> zsh_help.txt
+
 ### centos7 install  bzip2
 
 	yum install bzip2    # tar 使用压缩支持 .tar.bz2
@@ -60,6 +98,19 @@
 ### docker 加速器
 	curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://0c19a7ee.m.daocloud.io
 
+### docker postgresql
+
+	docker run --name pg -v /etc/localtime:/etc/localtime --privileged=true -e POSTGRES_PASSWORD=josh -v ~/pgdb:/var/lib/postgresql/data -d -p 2345:5432 postgres
+
+#### 修改postgresql 密码
+	docker exec -it pg /bin/bash
+	su postgres
+	psql -U postgres
+	ALTER USER postgres WITH PASSWORD 'josh';
+	\q
+	exit
+	exit
+
 
 ### docker 维护
 	docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker stop
@@ -68,7 +119,8 @@
 
 	#stop all container
 	docker ps | grep "Up" | awk '{print $1 }' | xargs docker stop | xargs docker rm
-	
+
+
 打开和关闭防火墙
 	systemctl stop/start firewalld.service
 	firewall-cmd --zone=public --add-port=8080/tcp --permanent
