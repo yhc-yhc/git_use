@@ -2,13 +2,13 @@
 monitordir=./test
 originip=172.16.20.107
 user=josh.zhu
-origindir=./
+origindir=./test
 
 cd $monitordir || { echo $monitordir not exists && exit 1; }
 inotifywait -mrq --format '%e %w%f %T' --timefmt='%Y-%m-%d/%H:%M:%S' -e modify,create,delete,attrib,close_write,move . | \
 while read INO_EVENT INO_FILE INO_TIME
 do
-	# echo $INO_TIME $INO_FILE $INO_EVENT
+	echo ============$INO_TIME $INO_FILE $INO_EVENT
 	if [[ $INO_EVENT =~ 'CREATE' ]] || [[ $INO_EVENT =~ 'MODIFY' ]] || 
       [[ $INO_EVENT =~ 'CLOSE_WRITE' ]] || [[ $INO_EVENT =~ 'MOVED_TO' ]] || 
       [[ $INO_EVENT =~ 'ATTRIB' ]]
@@ -20,6 +20,8 @@ do
    	if [[ $INO_EVENT =~ 'DELETE' ]] || [[ $INO_EVENT =~ 'MOVED_FROM' ]]
    	then
    		echo rsync -avzR --delete $(dirname ${INO_FILE}) ${user}@${originip}:${origindir}
-        rsync -avzR --delete $(dirname ${INO_FILE}) ${user}@${originip}:${origindir} 
+      rsync -avzR --delete $(dirname ${INO_FILE}) ${user}@${originip}:${origindir} 
    	fi
 done
+
+##### this can be used for fily sync
