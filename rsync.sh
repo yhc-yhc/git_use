@@ -1,27 +1,36 @@
 #!/bin/bash
-monitordir=./test
+monitordir=./synctest
 originip=172.16.20.107
 user=josh.zhu
-origindir=./test
+origindir=./synctest
+cd $monitordir || { mkdir $monitordir; cd $monitordir; }
 
-cd $monitordir || { echo $monitordir not exists && exit 1; }
+{
 inotifywait -mrq --format '%e %w%f %T' --timefmt='%Y-%m-%d/%H:%M:%S' -e modify,create,delete,attrib,close_write,move . | \
 while read INO_EVENT INO_FILE INO_TIME
 do
-	echo ============$INO_TIME $INO_FILE $INO_EVENT
-	if [[ $INO_EVENT =~ 'CREATE' ]] || [[ $INO_EVENT =~ 'MODIFY' ]] || 
-      [[ $INO_EVENT =~ 'CLOSE_WRITE' ]] || [[ $INO_EVENT =~ 'MOVED_TO' ]] || 
-      [[ $INO_EVENT =~ 'ATTRIB' ]]
+	if [[ $INO_EVENT =~ 'CLOSE_WRITE' ]] || [[ $INO_EVENT =~ 'MOVED_TO' ]] || [[ $INO_EVENT =~ 'ATTRIB' ]]
+    # || [[ $INO_EVENT =~ 'CREATE' ]] 
+    # || [[ $INO_EVENT =~ 'MODIFY' ]] 
    	then
         #rsync -avzcR $(dirname ${INO_FILE}) ${BACKUP_MACHINE_USER}@${BACKUP_MACHINE_IP}:${BACKUP_MACHINE_PATH}
-        echo rsync -avzcR ${INO_FILE} ${user}@${originip}:${origindir}     
+        echo ===$INO_TIME $INO_FILE $INO_EVENT : rsync -avzcR ${INO_FILE} ${user}@${originip}:${origindir}     
         rsync -avzcR ${INO_FILE} ${user}@${originip}:${origindir}          
    	fi
-   	if [[ $INO_EVENT =~ 'DELETE' ]] || [[ $INO_EVENT =~ 'MOVED_FROM' ]]
+   	if [[ $INO_EVENT =~ 'MOVED_FROM' ]] || [[ $INO_EVENT =~ 'DELETE' ]]
    	then
-   		echo rsync -avzR --delete $(dirname ${INO_FILE}) ${user}@${originip}:${origindir}
+   		echo ===$INO_TIME $INO_FILE $INO_EVENT : rsync -avzR --delete $(dirname ${INO_FILE}) ${user}@${originip}:${origindir}
       rsync -avzR --delete $(dirname ${INO_FILE}) ${user}@${originip}:${origindir} 
    	fi
+done
+}&
+echo "PID of monitor: $!"
+
+
+while :; do
+  echo rsync -avzcR . ${user}@${originip}:${origindir}
+  rsync -avzcR . ${user}@${originip}:${origindir}
+  sleep 3600
 done
 
 ##### this can be used for fily sync
