@@ -75,7 +75,13 @@
 	-P ：可以使用绝对路径来压缩！
 	-N ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的文件中！
 	--exclude FILE：在压缩的过程中，不要将 FILE 打包！
+	
+	tar -jcpf $tar_name $project_name
+	tar -jxpf ../$tar_name
 
+
+### centos7 zip 
+	yum install zip unzip
 
 ### 免 sudo 使用 docker
 
@@ -111,6 +117,159 @@
 	exit
 	exit
 
+	docker run \
+	-p 8080:8080 \
+	-d --name jenkins  jenkins
+
+### docker mongo
+
+	docker run -d --name temp -v ~/mongodata/pictureAir:/data/db --privileged=true mongo:3.2
+
+	docker exec -it temp /bin/bash
+
+	/usr/bin/mongorestore -d pictureAir /data/db 
+
+	=============================
+
+	export node1="192.168.8.114"
+	export node2="192.168.8.115"
+	export node3="192.168.8.116"
+
+	docker run \
+	--privileged=true -v /etc/localtime:/etc/localtime \
+	-v ~/mongodata/pictureAir:/data/db \
+	-p 27017:27017 \
+	--hostname="mongo_116" \
+	--add-host mongo_114:${node1} \
+	--add-host mongo_115:${node2} \
+	--add-host mongo_116:${node3} \
+	--name mongo -d mongo:3.2 \
+	--storageEngine wiredTiger \
+	--smallfiles \
+	--replSet "rs0"
+
+	docker exec -it mongo /bin/bash
+	mongo
+	use admin
+
+
+
+	docker run \
+	--privileged=true -v /etc/localtime:/etc/localtime \
+	-v ~/mongodata/slaver:/data/db \
+	-p 27017:27017 \
+	--hostname="mongo_115" \
+	--add-host mongo_114:${node1} \
+	--add-host mongo_115:${node2} \
+	--add-host mongo_116:${node3} \
+	--name mongo -d mongo:3.2 \
+	--storageEngine wiredTiger \
+	--smallfiles \
+	--replSet "rs0"
+
+	docker run \
+	--privileged=true -v /etc/localtime:/etc/localtime \
+	-v ~/mongodata/arbiter:/data/db \
+	-p 27017:27017 \
+	--hostname="mongo_114" \
+	--add-host mongo_114:${node1} \
+	--add-host mongo_115:${node2} \
+	--add-host mongo_116:${node3} \
+	--name mongo -d mongo:3.2 \
+	--storageEngine wiredTiger \
+	--smallfiles \
+	--replSet "rs0"
+
+	
+	
+{
+	"_id" : "rs0",
+	"version" : 1,
+	"protocolVersion" : NumberLong(1),
+	"members" : [
+		{
+			"_id" : 0,
+			"host" : "mongo_116:27017",
+			"arbiterOnly" : false,
+			"buildIndexes" : true,
+			"hidden" : false,
+			"priority" : 2,
+			"tags" : {
+				
+			},
+			"slaveDelay" : NumberLong(0),
+			"votes" : 1
+		},
+		{
+			"_id" : 1,
+			"host" : "mongo_115:27017",
+			"arbiterOnly" : false,
+			"buildIndexes" : true,
+			"hidden" : false,
+			"priority" : 1,
+			"tags" : {
+				
+			},
+			"slaveDelay" : NumberLong(0),
+			"votes" : 1
+		},
+		{
+			"_id" : 2,
+			"host" : "mongo_114:27017",
+			"arbiterOnly" : true,
+			"buildIndexes" : true,
+			"hidden" : false,
+			"priority" : 1,
+			"tags" : {
+				
+			},
+			"slaveDelay" : NumberLong(0),
+			"votes" : 1
+		}
+	],
+	"settings" : {
+		"chainingAllowed" : true,
+		"heartbeatIntervalMillis" : 2000,
+		"heartbeatTimeoutSecs" : 10,
+		"electionTimeoutMillis" : 10000,
+		"getLastErrorModes" : {
+			
+		},
+		"getLastErrorDefaults" : {
+			"w" : 1,
+			"wtimeout" : 0
+		},
+		"replicaSetId" : ObjectId("590c022f6ee2f05df3cbd8d7")
+	}
+}
+	
+
+	cfg={_id:"rs1", members:[ {_id:2,host:'pw1:27017',priority:1}, {_id:1,host:'pw2:27017',priority:2}, {_id:0,host:'pwa:27017'}] };  
+	rs.initiate(cfg)
+	rs.conf()
+	rs.status()
+
+		rs.status()                                { replSetGetStatus : 1 } checks repl set status
+        rs.initiate()                              { replSetInitiate : null } initiates set with default settings
+        rs.initiate(cfg)                           { replSetInitiate : cfg } initiates set with configuration cfg
+        rs.conf()                                  get the current configuration object from local.system.replset
+        rs.reconfig(cfg)                           updates the configuration of a running replica set with cfg (disconnects)
+        rs.add(hostportstr)                        add a new member to the set with default attributes (disconnects)
+        rs.add(membercfgobj)                       add a new member to the set with extra attributes (disconnects)
+        rs.addArb(hostportstr)                     add a new member which is arbiterOnly:true (disconnects)
+        rs.stepDown([stepdownSecs, catchUpSecs])   step down as primary (disconnects)
+        rs.syncFrom(hostportstr)                   make a secondary sync from the given member
+        rs.freeze(secs)                            make a node ineligible to become primary for the time specified
+        rs.remove(hostportstr)                     remove a host from the replica set (disconnects)
+        rs.slaveOk()                               allow queries on secondary nodes
+
+        rs.printReplicationInfo()                  check oplog size and time range
+        rs.printSlaveReplicationInfo()             check replica set members and replication lag
+        db.isMaster()                              check who is primary
+
+        reconfiguration helpers disconnect from the database so the shell will display
+        an error, even if the command succeeds.
+
 
 ### docker 维护
 	docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker stop
@@ -118,8 +277,78 @@
 	docker images -a | grep none | awk '{print $3 }'|xargs docker rmi
 
 	#stop all container
-	docker ps | grep "Up" | awk '{print $1 }' | xargs docker stop | xargs docker rm
+	docker ps | grep "Up" | awk '{print $1 }' | xargs docker stop || docker ps -a | grep Exited | awk '{print $1 }' | xargs docker rm
 
+###docker run --help
+
+	Usage:	docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+	Run a command in a new container
+
+	  -a, --attach=[]                 Attach to STDIN, STDOUT or STDERR
+	  --add-host=[]                   Add a custom host-to-IP mapping (host:ip)
+	  --blkio-weight=0                Block IO (relative weight), between 10 and 1000
+	  --cpu-shares=0                  CPU shares (relative weight)
+	  --cap-add=[]                    Add Linux capabilities
+	  --cap-drop=[]                   Drop Linux capabilities
+	  --cgroup-parent=                Optional parent cgroup for the container
+	  --cidfile=                      Write the container ID to the file
+	  --cpu-period=0                  Limit CPU CFS (Completely Fair Scheduler) period
+	  --cpu-quota=0                   Limit CPU CFS (Completely Fair Scheduler) quota
+	  --cpuset-cpus=                  CPUs in which to allow execution (0-3, 0,1)
+	  --cpuset-mems=                  MEMs in which to allow execution (0-3, 0,1)
+	  -d, --detach=false              Run container in background and print container ID
+	  --device=[]                     Add a host device to the container
+	  --disable-content-trust=true    Skip image verification
+	  --dns=[]                        Set custom DNS servers
+	  --dns-opt=[]                    Set DNS options
+	  --dns-search=[]                 Set custom DNS search domains
+	  -e, --env=[]                    Set environment variables
+	  --entrypoint=                   Overwrite the default ENTRYPOINT of the image
+	  --env-file=[]                   Read in a file of environment variables
+	  --expose=[]                     Expose a port or a range of ports
+	  --group-add=[]                  Add additional groups to join
+	  -h, --hostname=                 Container host name
+	  --help=false                    Print usage
+	  -i, --interactive=false         Keep STDIN open even if not attached
+	  --ipc=                          IPC namespace to use
+	  --kernel-memory=                Kernel memory limit
+	  -l, --label=[]                  Set meta data on a container
+	  --label-file=[]                 Read in a line delimited file of labels
+	  --link=[]                       Add link to another container
+	  --log-driver=                   Logging driver for container
+	  --log-opt=[]                    Log driver options
+	  --lxc-conf=[]                   Add custom lxc options
+	  -m, --memory=                   Memory limit
+	  --mac-address=                  Container MAC address (e.g. 92:d0:c6:0a:29:33)
+	  --memory-reservation=           Memory soft limit
+	  --memory-swap=                  Total memory (memory + swap), '-1' to disable swap
+	  --memory-swappiness=-1          Tuning container memory swappiness (0 to 100)
+	  --name=                         Assign a name to the container
+	  --net=default                   Set the Network for the container
+	  --oom-kill-disable=false        Disable OOM Killer
+	  -P, --publish-all=false         Publish all exposed ports to random ports
+	  -p, --publish=[]                Publish a container's port(s) to the host
+	  --pid=                          PID namespace to use
+	  --privileged=false              Give extended privileges to this container
+	  --read-only=false               Mount the container's root filesystem as read only
+	  --restart=no                    Restart policy to apply when a container exits
+	  --rm=false                      Automatically remove the container when it exits
+	  --security-opt=[]               Security Options
+	  --sig-proxy=true                Proxy received signals to the process
+	  --stop-signal=SIGTERM           Signal to stop a container, SIGTERM by default
+	  -t, --tty=false                 Allocate a pseudo-TTY
+	  -u, --user=                     Username or UID (format: <name|uid>[:<group|gid>])
+	  --ulimit=[]                     Ulimit options
+	  --uts=                          UTS namespace to use
+	  -v, --volume=[]                 Bind mount a volume
+	  --volume-driver=                Optional volume driver for the container
+	  --volumes-from=[]               Mount volumes from the specified container(s)
+
+### use docker-compose
+
+	curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-Linux-x86_64 > /usr/bin/docker-compose
+	chmod  +x /usr/bin/docker-compose
 
 打开和关闭防火墙
 	systemctl stop/start firewalld.service
@@ -127,3 +356,6 @@
 	firewall-cmd --zone=public --add-service=http --permanent
 	firewall-cmd --reload
 	firewall-cmd --list-all
+
+
+

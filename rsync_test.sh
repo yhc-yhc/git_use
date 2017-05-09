@@ -1,10 +1,10 @@
 
 cd ./synctest
 host=a
-cd $host || { mkdir $host; cd $host; }
+cd $host > /dev/null 2>&1 || { mkdir $host; cd $host; }
 i=0
 date1=`date +%s`
-while [[ $i -lt 50 ]]; do
+while [[ $i -lt 500 ]]; do
 	i=`expr $i + 1`;
 	# echo $i;
 	{ cp ../../x128.JPG ${host}${i}_x128.jpg; }&

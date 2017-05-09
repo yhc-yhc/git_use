@@ -1,0 +1,27 @@
+2017-04-27/03:23:16 CREATE,ISDIR ./a == command: rsync -avzcR ./a josh.zhu@172.16.20.107:./synctest
+--》2017/04/27_032316
+building file list ... done
+./
+a/
+a/a1_pre.jpg
+a/a1_x1024.jpg
+a/a1_x128.jpg
+a/a1_x512.jpg
+a/a2_pre.jpg
+a/a2_x1024.jpg
+a/a2_x128.jpg
+a/a2_x512.jpg
+a/a3_pre.jpg
+a/a3_x1024.jpg
+a/a3_x128.jpg
+a/a3_x512.jpg
+a/a4_pre.jpg
+a/a4_x1024.jpg
+a/a4_x128.jpg
+a/a4_x512.jpg
+a/a5_pre.jpg
+a/a5_x512.jpg
+
+sent 10,282,878 bytes  received 432 bytes  4,113,324.00 bytes/sec
+total size is 10,071,363  speedup is 0.98
+《--2017/04/27_032318
