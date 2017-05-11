@@ -8,12 +8,18 @@ db.photos.aggregate([
 },
 {
     $project: {
+        _id: 0,
         shootOn: 1,
         code: '$customerIds.code'
     }
 },
 {
     $unwind: '$code'
+},
+{
+    $match: {
+        'code': {$in: codeAry}
+    }
 },
 {
     $group: {
